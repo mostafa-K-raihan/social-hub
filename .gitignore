@@ -1,6 +1,6 @@
 __pycache__/
-venv/
-
+*env/
+app/migrations/
 frontend/.DS_Store
 frontend/node_modules
 frontend/dist

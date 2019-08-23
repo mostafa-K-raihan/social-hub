@@ -1,18 +1,19 @@
 <template>
-    <div class="sidebar">
-        This is a sidebar
+    <div class="footer">
+        This is Footer
     </div>
 </template>
 
 <script>
     export default {
-        name: "Sidebar"
+        name: "Footer"
     }
 </script>
 
 <style scoped>
-    .sidebar {
-        grid-column: 1 / 2;
+    .footer {
+        grid-column: 1 / 3;
+        grid-row: 3 / 4;
 
         border: 1px solid red;
         display: grid;

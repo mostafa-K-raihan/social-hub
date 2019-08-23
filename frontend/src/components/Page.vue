@@ -3,6 +3,7 @@
     <Topbar/>
     <Sidebar/>
     <MainContent/>
+    <Footer/>
   </div>
 </template>
 
@@ -11,9 +12,11 @@
 import Topbar  from "./Topbar";
 import Sidebar from "./Sidebar";
 import MainContent from "./MainContent";
+import Footer from "./Footer";
 export default {
   name: 'Page',
   components: {
+    Footer,
     Topbar,
     Sidebar,
     MainContent
@@ -25,8 +28,8 @@ export default {
 <style scoped>
   .page {
     display: grid;
-    grid-template-columns: 30% 1fr;
-    grid-template-rows: 20% 1fr;
+    grid-template-columns: 10% 1fr;
+    grid-template-rows: 10% 1fr 10%;
     grid-gap: .5rem;
     border: 1px solid black;
     padding : .5rem;
