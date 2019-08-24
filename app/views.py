@@ -15,7 +15,7 @@ def get_tweets_page(request):
 
 
 def get_tweets_data(request):
-    serializer = TweetSerializer(tweePy.get_tweets(), many=True)
+    serializer = TweetSerializer(tweePy.get_tweets(page = int(request.GET.get('page', 0))), many=True)
     return JsonResponse(serializer.data, safe=False)
 
 

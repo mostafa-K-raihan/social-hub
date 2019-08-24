@@ -26,25 +26,45 @@ def save_to_db():
     original_tweets = user_tweets()
     insert_date = datetime.datetime.now()
     new_tweets = []
+    media_list = []
     for original_tweet in original_tweets:
         if not original_tweet.retweeted:
             if not Tweet.objects.filter(uuid=original_tweet.id):
+                # print(original_tweet)
                 new_tweet = Tweet(uuid=original_tweet.id,
                                   text=original_tweet.text,
                                   date=original_tweet.created_at,
-                                  insert_date=insert_date
+                                  insert_date=insert_date,
+                                  user=original_tweet.user.screen_name
                                   )
+                json = original_tweet._json
+                print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+                print(json)
+                print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+                if 'extended_entities' in json:
+                    # print(original_tweet._json)
+
+                    for media in json['extended_entities']['media']:
+                        new_media = Media(media_url=media['media_url'],
+                                          media_type=media['type'],
+                                          tweet_id=original_tweet.id)
+                        media_list.append(new_media)
                 new_tweets.append(new_tweet)
 
     print("NEW Tweets: " + str(len(new_tweets)))
+    print("NEW Media: " + str(len(media_list)))
+
     Tweet.objects.bulk_create(new_tweets)
+    Media.objects.bulk_create(media_list)
 
 
-def get_tweets():
+def get_tweets(page):
     if is_safe_to_call_twitter_api():
         save_to_db()
 
-    return Tweet.objects.order_by('-insert_date')[:10]
+    limit = TWEETS_PER_PAGE
+    offset = page * TWEETS_PER_PAGE
+    return Tweet.objects.order_by('-insert_date')[offset:offset + limit]
 
 
 def get_last_inserted_date_time():
@@ -61,6 +81,7 @@ def is_safe_to_call_twitter_api():
     time_delta = datetime.timedelta(minutes=API_RATE_LIMIT_TIME_MINUTES)
 
     safe = now - time_delta > last_inserted_time
+    safe = False  # comment out this line whenever twitter is ready to unblock
     if safe:
         print("CALLING API")
     else:

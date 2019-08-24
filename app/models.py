@@ -16,9 +16,17 @@ class Tweet(models.Model):
     text = models.TextField()
     date = models.DateTimeField(blank=True, null=True)
     insert_date = models.DateTimeField(blank=True, null=True)
+    user = models.CharField(max_length=100)
 
     def __str__(self):
         print(self.text)
+
+
+class Media(models.Model):
+
+    tweet_id = models.CharField(max_length=250, null=True, blank=True)
+    media_url = models.CharField(max_length=100, null=True, blank=True)
+    media_type = models.CharField(max_length=20)
 
 
 

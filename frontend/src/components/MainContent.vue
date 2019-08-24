@@ -1,6 +1,9 @@
 <template>
     <div class="content">
-        <TweetCard v-for="(tweet,index) in tweets" :key="index" :tweet="tweet"></TweetCard>
+        <TweetCard v-for="(tweet,index) in computedTweets" :key="index" :tweet="tweet"></TweetCard>
+        <div v-if="!computedTweets.length">
+            No More Tweets
+        </div>
     </div>
 </template>
 
@@ -8,25 +11,20 @@
     /* eslint-disable no-console */
 
     import TweetCard from "./TweetCard";
-    import axios from 'axios';
-    const API_URL = 'http://localhost:8000/app/';
+
+
     export default {
         name: "MainContent",
         components: {
             TweetCard,
         },
-        data () {
-            return {
-                tweets:[]
-            }
-        },
         mounted() {
-            axios.get(`${API_URL}home/data`)
-                .then(res=>{
-                    res.status === 200 ?
-                        this.tweets = res.data : console.log("Something went wrong");
-                })
-                .catch(err=>console.log(err))
+            this.$store.dispatch('getTweets');
+        },
+        computed: {
+            computedTweets() {
+                return this.$store.state.twitter.tweets;
+            }
         }
     }
 </script>
