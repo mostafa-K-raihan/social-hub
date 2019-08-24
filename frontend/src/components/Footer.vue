@@ -1,12 +1,16 @@
 <template>
     <div class="footer">
-        This is Footer
+        <pagination-panel></pagination-panel>
     </div>
 </template>
 
 <script>
+    import PaginationPanel from "./PaginationPanel";
     export default {
-        name: "Footer"
+        name: "Footer",
+        components: {
+            PaginationPanel
+        }
     }
 </script>
 

@@ -7,15 +7,7 @@ from ..models import *
 import datetime
 from django.db.models import Max
 
-GET_TOTAL_TWEET_COUNT = 1000
-API_RATE_LIMIT_TIME_MINUTES = 15
-
-
-CONSUMER_KEY = 'tyF1ycXulIkEG44EEaNre8H9M'
-CONSUMER_SECRET = 'NOHXnBFB2FLwdKEIinHvZzkihAcJgPL0ibGUpYaKGz9B5qNUL3'
-
-ACCESS_TOKEN = '1073823523540324352-x6RimeEQ73i0YFkUqssrp2Q5g2P7Dl'
-ACCESS_TOKEN_SECRET = 'AqjyPJxFq099h8h1qnURFKA7nTQ17VrI4XmaqryPoj3Dc'
+from ..configuration import *
 
 
 def user_tweets():
