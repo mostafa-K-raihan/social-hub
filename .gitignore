@@ -1,8 +1,7 @@
 __pycache__/
 *env/
 app/migrations/
-/app/configuration.py
-
+app/configuration.py
 frontend/.DS_Store
 frontend/node_modules
 frontend/dist
