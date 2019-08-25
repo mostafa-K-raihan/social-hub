@@ -2,7 +2,7 @@
   <div class="page">
     <Topbar/>
     <Sidebar/>
-    <MainContent/>
+    <MainContent :url="url"/>
     <Footer/>
   </div>
 </template>
@@ -20,6 +20,19 @@ export default {
     Topbar,
     Sidebar,
     MainContent
+  },
+  data() {
+    return {
+      url : 'text'
+    }
+  },
+  created() {
+    let url = new URL(location.href);
+    if(url.pathname.indexOf('media') !==-1) {
+      this.url = 'media'
+    }else if(url.pathname.indexOf('text') !== -1) {
+      this.url = 'text'
+    }
   }
 }
 </script>

@@ -15,7 +15,16 @@ def get_tweets_page(request):
 
 
 def get_tweets_data(request):
-    serializer = TweetSerializer(tweePy.get_tweets(page = int(request.GET.get('page', 0))), many=True)
+    serializer = TweetSerializer(tweePy.get_tweets(page=int(request.GET.get('page', 0))), many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+def get_media_page(request):
+    return index(request)
+
+
+def get_media_data(request):
+    serializer = MediaSerializer(tweePy.get_media(page=int(request.GET.get('page', 0))), many=True)
     return JsonResponse(serializer.data, safe=False)
 
 

@@ -2,7 +2,6 @@ import pytz
 import tweepy
 from tweepy.auth import OAuthHandler
 
-from env.Lib.warnings import catch_warnings
 from ..models import *
 import datetime
 from django.db.models import Max
@@ -38,16 +37,30 @@ def save_to_db():
                                   user=original_tweet.user.screen_name
                                   )
                 json = original_tweet._json
-                print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-                print(json)
-                print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+                # print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+                # print(json)
+                # print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                 if 'extended_entities' in json:
                     # print(original_tweet._json)
 
                     for media in json['extended_entities']['media']:
-                        new_media = Media(media_url=media['media_url'],
-                                          media_type=media['type'],
-                                          tweet_id=original_tweet.id)
+                        if media['type'] == 'video':
+
+                            new_media = Media(media_url=media['video_info']['variants'][0]['url'],
+                                              media_type=media['type'],
+                                              tweet_id=original_tweet.id,
+                                              medium_width=media['sizes']['medium']['w'],
+                                              medium_height=media['sizes']['medium']['h'],
+                                              )
+
+                        else:
+
+                            new_media = Media(media_url=media['media_url'],
+                                              media_type=media['type'],
+                                              tweet_id=original_tweet.id,
+                                              medium_width=media['sizes']['medium']['w'],
+                                              medium_height=media['sizes']['medium']['h']
+                                              )
                         media_list.append(new_media)
                 new_tweets.append(new_tweet)
 
@@ -56,6 +69,15 @@ def save_to_db():
 
     Tweet.objects.bulk_create(new_tweets)
     Media.objects.bulk_create(media_list)
+
+
+def get_media(page):
+    if is_safe_to_call_twitter_api():
+        save_to_db()
+
+    limit = TWEETS_PER_PAGE
+    offset = page * TWEETS_PER_PAGE
+    return Media.objects.order_by('-id')[offset:offset + limit]
 
 
 def get_tweets(page):
@@ -76,12 +98,15 @@ def is_safe_to_call_twitter_api():
     # defensive. When I can call I will collect massive amount of data.
     # then for 15 minutes I will accept the request but will not call
     # twitter api, instead I will render data from cache.
-    last_inserted_time = get_last_inserted_date_time().replace(tzinfo=pytz.UTC)
-    now = datetime.datetime.now().replace(tzinfo=pytz.UTC)
-    time_delta = datetime.timedelta(minutes=API_RATE_LIMIT_TIME_MINUTES)
+    safe = True
+    if get_last_inserted_date_time() is not None:
+        last_inserted_time = get_last_inserted_date_time().replace(tzinfo=pytz.UTC)
+        now = datetime.datetime.now().replace(tzinfo=pytz.UTC)
+        time_delta = datetime.timedelta(minutes=API_RATE_LIMIT_TIME_MINUTES)
 
-    safe = now - time_delta > last_inserted_time
-    safe = False  # comment out this line whenever twitter is ready to unblock
+        safe = now - time_delta > last_inserted_time
+        safe = False  # comment out this line whenever twitter is ready to unblock
+
     if safe:
         print("CALLING API")
     else:

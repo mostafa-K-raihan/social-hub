@@ -1,6 +1,9 @@
 <template>
     <div class="sidebar">
-        This is a sidebar
+        <ul>
+            <li> <a href="/app/home/text">Only Tweets with text</a></li>
+            <li> <a href="/app/home/media">Only Media</a></li>
+        </ul>
     </div>
 </template>
 

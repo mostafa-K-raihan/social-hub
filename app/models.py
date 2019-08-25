@@ -27,6 +27,8 @@ class Media(models.Model):
     tweet_id = models.CharField(max_length=250, null=True, blank=True)
     media_url = models.CharField(max_length=100, null=True, blank=True)
     media_type = models.CharField(max_length=20)
+    medium_width = models.IntegerField(null=True, blank=True)
+    medium_height = models.IntegerField(null=True, blank=True)
 
 
 

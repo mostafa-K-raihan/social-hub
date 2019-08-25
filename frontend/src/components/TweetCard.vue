@@ -37,39 +37,47 @@
 <style scoped>
     .card{
         border: 1px solid tomato;
-        height: 20vh;
+        height: 30vh;
         display: grid;
-        grid-template-columns: 20% 1fr;
-        /*align-items: center;*/
-        /*justify-content: center;*/
+        grid-template-columns: 30% 1fr;
+        grid-template-rows: auto;
+
 
     }
 
     .author {
         font-size: 1.8rem;
-        /*padding: 1.5em 1em;*/
-        background-image: linear-gradient(to right, #2c3e50, #9aae45);
+
+        background-image:  linear-gradient(45deg, #2c3e50, #33545f, #551789);
         background-size: 400%;
         animation: author-animation 10s infinite alternate;
-        /*background: aqua;*/
+
         display: grid;
         align-items: center;
         justify-content: center;
         color: whitesmoke;
-        align-self: center;
-        height: 100%;
+
+
     }
 
     .time {
         font-size: 1rem;
     }
     .content {
-        background: turquoise;
-        color: #2c3e50;
+        background-image: linear-gradient(45deg, #456456, #567567, #678678);
+        background-size: 400%;
+        animation: author-animation 10s infinite alternate;
         font-size: 1.2rem;
         padding: 1.5rem 0.2rem;
-        align-self: start;
-        height: 100%;
+    }
+
+    .tweet {
+        color: whitesmoke;
+        filter: brightness(90%);
+
+    }
+    .tweet a {
+        color: wheat;
     }
 
     @keyframes author-animation {
