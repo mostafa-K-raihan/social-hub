@@ -17,7 +17,7 @@ A place to gather all major social media and interact with them
     
     `CONSUMER_SECRET = <your twitter consumer secret>`
     
-    `ACCESS_TOKEN = <your twitter access token>
+    `ACCESS_TOKEN = <your twitter access token>`
     
     `ACCESS_TOKEN_SECRET = <your twitter access token secret>`
     
