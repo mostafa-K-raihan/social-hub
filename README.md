@@ -13,7 +13,7 @@ A place to gather all major social media and interact with them
     
     `TWEETS_PER_PAGE = 10`
 
-    `CONSUMER_KEY = <your twitter consumer key>`
+    `CONSUMER_KEY = <your twitter consumer key>` 
     
     `CONSUMER_SECRET = <your twitter consumer secret>`
     
@@ -22,6 +22,9 @@ A place to gather all major social media and interact with them
     `ACCESS_TOKEN_SECRET = <your twitter access token secret>`
     
     `API_RATE_LIMIT_TIME_MINUTES = 15`
+    
+    if you do not possess your twitter api key you can get them via developer.twitter.com, create an app, request above four keys
+    
 7. Change your Database settings inside vue_cli3_webpack_django/settings.py
 8. python manage.py makemigrations
 9. python manage.py migrate
